@@ -1,51 +1,307 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Hub</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="scripts.js" defer></script>
+    <title>Unblocked Games Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lemon+Milk&display=swap" rel="stylesheet"> <!-- Lemon Milk font -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Lemon Milk', sans-serif; /* Using Lemon Milk font */
+        }
+        body {
+            background: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        header {
+            background: #0073e6;
+            width: 100%;
+            padding: 1rem 0;
+            text-align: center;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        nav {
+            margin: 1rem 0;
+            display: flex;
+            gap: 1rem;
+        }
+        .tab {
+            padding: 0.5rem 1rem;
+            background: #e6e6e6;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, box-shadow 0.3s;
+            font-size: 1.1rem;
+        }
+        .tab:hover {
+            background: #0073e6;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .tab.active {
+            background: #0073e6;
+            color: white;
+        }
+        .content {
+            display: none;
+            width: 80%;
+            margin-top: 2rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .content.active {
+            display: block;
+        }
+        .games-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+        .game {
+            width: 150px; /* Smaller square size */
+            height: 150px;
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+        }
+        .game:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.1);
+        }
+        .game img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: filter 0.3s;
+        }
+        .game:hover img {
+            filter: blur(5px); /* Blur the image on hover */
+        }
+        .game-name {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+        }
+        .game:hover .game-name {
+            opacity: 1;
+        }
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 10px;
+        }
+        footer {
+            margin-top: 2rem;
+            padding: 1rem 0;
+            text-align: center;
+            background: #0073e6;
+            color: white;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+        }
+        .search-container {
+            margin: 1rem 0;
+        }
+        .search-container input {
+            padding: 0.5rem;
+            width: 250px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            transition: border 0.3s;
+        }
+        .search-container input:focus {
+            border-color: #0073e6;
+        }
+        .game-page {
+            width: 80%;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .game-page img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+        }
+        .go-back {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 0.5rem 1rem;
+            background: #0073e6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        .go-back:hover {
+            background: #005bb5;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <div class="logo">Game Hub</div>
-        <nav>
-            <ul>
-                <li><a href="#games" class="active">Games</a></li>
-                <li><a href="#apps">Apps</a></li>
-                <li><a href="#updates">Updates</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main id="games">
-        <h1>Explore Games</h1>
-        <div class="game-grid">
-            <!-- Game cards -->
-            <div class="game-card" onclick="openGame('subway-surfers')">
-                <img src="https://via.placeholder.com/150" alt="Subway Surfers">
-                <h3>Subway Surfers</h3>
+    <header>Unblocked Games Hub</header>
+    <nav>
+        <div class="tab active" data-tab="games">Games</div>
+        <div class="tab" data-tab="apps">Apps</div>
+        <div class="tab" data-tab="updates">Updates</div>
+    </nav>
+
+    <!-- Search bar -->
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search games..." />
+    </div>
+
+    <div id="games" class="content active">
+        <h2>Games</h2>
+        <div class="games-container" id="games-container">
+            <!-- Game 1: Happy Wheels -->
+            <div class="game" data-game="https://games-online.io/game/HappyWheels/" data-name="Happy Wheels">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Happy_Wheels_logo.svg/1200px-Happy_Wheels_logo.svg.png" alt="Happy Wheels"> <!-- Placeholder image -->
+                <div class="game-name">Happy Wheels</div>
             </div>
-            <div class="game-card" onclick="openGame('basket-random')">
-                <img src="https://via.placeholder.com/150" alt="Basket Random">
-                <h3>Basket Random</h3>
+            <!-- Game 2: Snowball.io -->
+            <div class="game" data-game="https://google-opensocial.googleusercontent.com/gadgets/ifr?url=https://cdn.jsdelivr.net/gh/gertdoro/SQLite4Unity3d@8516fc0bd1d2be662ca484f5dc506268b24763ef/Example/Assets/snowball.xml&container=ig" data-name="Snowball.io">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/Snowballio_game_logo.png" alt="Snowball.io"> <!-- Placeholder image -->
+                <div class="game-name">Snowball.io</div>
             </div>
-            <div class="game-card" onclick="openGame('drive-mad')">
-                <img src="https://via.placeholder.com/150" alt="Drive Mad">
-                <h3>Drive Mad</h3>
+            <!-- Game 3: Dune -->
+            <div class="game" data-game="https://scratch.mit.edu/projects/365254777/embed" data-name="Dune">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/31/Dune_logo.png" alt="Dune"> <!-- Placeholder image -->
+                <div class="game-name">Dune</div>
             </div>
-            <!-- Add more games dynamically -->
-        </div>
-    </main>
-    <div id="game-modal" class="hidden">
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeGame()">Close</button>
-            <iframe id="game-frame" src="" frameborder="0"></iframe>
+            <!-- Game 4: Crossy Road -->
+            <div class="game" data-game="https://images-opensocial.googleusercontent.com/gadgets/ifr?url=https://cdn.jsdelivr.net/gh/bessiegasbarro/CTRoad@48e0fa150a66bcd0e589e46c0bdd84c3f520a4f3/ctr.xml&container=ig" data-name="Crossy Road">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/92/Crossy_Road_Logo.png" alt="Crossy Road"> <!-- Placeholder image -->
+                <div class="game-name">Crossy Road</div>
+            </div>
+            <!-- Game 5: Cookie Clicker -->
+            <div class="game" data-game="https://webglmath.github.io/cookie-clicker/" data-name="Cookie Clicker">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/Cookie_Clicker_logo.png" alt="Cookie Clicker"> <!-- Placeholder image -->
+                <div class="game-name">Cookie Clicker</div>
+            </div>
+            <!-- Game 6: Tomb of the Mask -->
+            <div class="game" data-game="https://scratch.mit.edu/projects/468203032/embed" data-name="Tomb of the Mask">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Tomb_of_the_Mask_logo.png" alt="Tomb of the Mask"> <!-- Placeholder image -->
+                <div class="game-name">Tomb of the Mask</div>
+            </div>
+            <!-- Game 7: Pop the Lock -->
+            <div class="game" data-game="https://scratch.mit.edu/projects/977322731/embed" data-name="Pop the Lock">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Pop_the_Lock_Logo.png" alt="Pop the Lock"> <!-- Placeholder image -->
+                <div class="game-name">Pop the Lock</div>
+            </div>
+            <!-- Game 8: Car Driving -->
+            <div class="game" data-game="https://gg-opensocial.googleusercontent.com/gadgets/ifr?url=https://cdn.jsdelivr.net/gh/gertdoro/UnityExplorer@b38448679f5490397649c620ad8f803f834df565/UI/card.xml&container=ig" data-name="Car Driving">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Car_driving_logo.png" alt="Car Driving"> <!-- Placeholder image -->
+                <div class="game-name">Car Driving</div>
+            </div>
         </div>
     </div>
-    <footer>
-        <p>&copy; 2024 Game Hub. All rights reserved.</p>
-    </footer>
+
+    <div id="apps" class="content">
+        <h2>Apps</h2>
+        <p>No apps available yet.</p>
+    </div>
+
+    <div id="updates" class="content">
+        <h2>Updates</h2>
+        <p>Added More Games and fixed Screen Bug</p>
+    </div>
+
+    <div id="game-page" class="game-page" style="display: none;">
+        <button class="go-back" onclick="goBack()">Go Back</button>
+        <h2 id="game-title"></h2>
+        <iframe id="game-frame" width="100%" height="500px"></iframe>
+    </div>
+
+    <footer>© 2024 Unblocked Games Hub</footer>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.content');
+        const games = document.querySelectorAll('.game');
+        const gameFrame = document.getElementById('game-frame');
+        const gamePage = document.getElementById('game-page');
+        const gameTitle = document.getElementById('game-title');
+        const searchInput = document.getElementById('search');
+        const gamesContainer = document.getElementById('games-container');
+
+        // Tab switching functionality
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                contents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === tab.dataset.tab) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        games.forEach(game => {
+            game.addEventListener('click', () => {
+                const gameUrl = game.dataset.game;
+                const gameName = game.dataset.name;
+
+                gameTitle.textContent = gameName;
+                gameFrame.src = gameUrl;
+
+                // Hide the game container and display the game page
+                document.getElementById('games').style.display = 'none';
+                gamePage.style.display = 'block';
+            });
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            games.forEach(game => {
+                const gameName = game.dataset.name.toLowerCase();
+                if (gameName.includes(query)) {
+                    game.style.display = 'block';
+                } else {
+                    game.style.display = 'none';
+                }
+            });
+        });
+
+        function goBack() {
+            // Stop the game and go back
+            gameFrame.src = '';
+            document.getElementById('games').style.display = 'block';
+            gamePage.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
