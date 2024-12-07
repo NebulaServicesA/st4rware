@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="scripts.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo">Game Hub</div>
+        <nav>
+            <ul>
+                <li><a href="#games" class="active">Games</a></li>
+                <li><a href="#apps">Apps</a></li>
+                <li><a href="#updates">Updates</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main id="games">
+        <h1>Explore Games</h1>
+        <div class="game-grid">
+            <!-- Game cards -->
+            <div class="game-card" onclick="openGame('subway-surfers')">
+                <img src="https://via.placeholder.com/150" alt="Subway Surfers">
+                <h3>Subway Surfers</h3>
+            </div>
+            <div class="game-card" onclick="openGame('basket-random')">
+                <img src="https://via.placeholder.com/150" alt="Basket Random">
+                <h3>Basket Random</h3>
+            </div>
+            <div class="game-card" onclick="openGame('drive-mad')">
+                <img src="https://via.placeholder.com/150" alt="Drive Mad">
+                <h3>Drive Mad</h3>
+            </div>
+            <!-- Add more games dynamically -->
+        </div>
+    </main>
+    <div id="game-modal" class="hidden">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeGame()">Close</button>
+            <iframe id="game-frame" src="" frameborder="0"></iframe>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 Game Hub. All rights reserved.</p>
+    </footer>
+</body>
+</html>
