@@ -217,12 +217,11 @@
             { name: "Moto X3M Pool Party", url: "https://images-opensocial.googleusercontent.com/gadgets/ifr?url=https://649025137-174029463385024710.preview.editmysite.com/uploads/b/139890129-767696982876512205/files/mx3mpp.xml&container=ig", img: "https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=1200,height=1200,fit=cover,f=png/0235b530eec4f17ad60137f6b245a988.jpeg" },
             { name: "Soccer Random", url: "https://images-opensocial.googleusercontent.com/gadgets/ifr?url=https://471058263-725410472258601738.preview.editmysite.com/uploads/b/139890129-510930859892590631/files/sr.xml&container=ig", img: "https://play-lh.googleusercontent.com/G1PIlb6HWKSaDre0XpUcmKGps9T4iamsSlwrogB3EJzYv4bz0M2am4D17MtGzndaOOU" },
             { name: "Retro Bowl", url: "https://vtn5c31dcjtimmb9o2lm882bk13i56hh-a-sites-opensocial.googleusercontent.com/gadgets/ifr?url=https://274079163-174037128449362058.preview.editmysite.com/uploads/b/139890129-899796311729593176/files/rtbl.xml&container=enterprise&view=default&lang=en&country=ALL&sanitize=0&v=afedeabb2fce9b51&libs=core&mid=88&parent=https://sites.google.com/site/unblockedgame76/retrobowl#st=e%3DAIHE3cA1zgmQ7PKxlx7gtXV8Ub9dOexMzGOvLpmP90ETyaA0SJuy%252F%252FHkPGbYwCvaGPhFsAdc7rRc6%252BybvNKZAUCjKAd4wrUvwKDuBOb6QApVN9bfKbiXPEm48GiSwjjxDyoReMGHB3Wg%26c%3Denterprise&rpctoken=2316186717334572930", img: "https://upload.wikimedia.org/wikipedia/en/b/bf/Retro_Bowl_cover.png" },
-            { name: "Happy Wheels", url: "https://games-online.io/game/HappyWheels/", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTj_qZAxS9_mOuv90OH4m4qzzl5V6s2_KtO5Q&s" },
-            { name: "Snowball.io", url: "https://google-opensocial.googleusercontent.com/gadgets/ifr?url=https://cdn.jsdelivr.net/gh/gertdoro/SQLite4Unity3d@8516fc0bd1d2be662ca484f5dc506268b24763ef/Example/snball.xml&container=ig", img: "https://play-lh.googleusercontent.com/NY8q9TfiPQ3-VjmZklPEow6H5yJhzQT-xN6V9G4imxcsrM1y0ckrnvv8A6MQFxEn7dIt" },
+            { name: "Slope", url: "https://classroomjq.github.io/class2623/slope/", img: "https://play-lh.googleusercontent.com/FgHYY1cdp7l5PhlYfFrAsv8lAqntaz6aF2u8CWy0Jb0wO_qBQqwlIiktd9C1n-1sMnB0" }
         ];
 
         const itemsPerPage = 8;
-        let currentPage = 1;
+        let currentPage = getCurrentPageFromURL();
 
         // Show Games Function
         function showGames() {
@@ -262,9 +261,22 @@
             document.getElementById("gameBox").style.display = "none";
         }
 
+        // Get Current Page from URL
+        function getCurrentPageFromURL() {
+            const path = window.location.pathname.split("/").pop();
+            let page = parseInt(path) || 1;
+            return Math.max(page, 1);  // Ensure page is at least 1
+        }
+
+        // Update URL with the current page
+        function updateURL(page) {
+            history.pushState(null, null, `/${page}`);
+        }
+
         // Change Page
         function goToPage(page) {
             currentPage = page;
+            updateURL(page);
             showGames();
         }
 
@@ -282,34 +294,6 @@
 
         // Initialize the page
         showGames();
-
-        // Tab switching logic
-        document.getElementById("gamesTab").onclick = () => {
-            document.getElementById("gamesTab").classList.add("active");
-            document.getElementById("appsTab").classList.remove("active");
-            document.getElementById("aboutTab").classList.remove("active");
-            document.getElementById("games").classList.add("active");
-            document.getElementById("apps").classList.remove("active");
-            document.getElementById("about").classList.remove("active");
-        };
-
-        document.getElementById("appsTab").onclick = () => {
-            document.getElementById("gamesTab").classList.remove("active");
-            document.getElementById("appsTab").classList.add("active");
-            document.getElementById("aboutTab").classList.remove("active");
-            document.getElementById("games").classList.remove("active");
-            document.getElementById("apps").classList.add("active");
-            document.getElementById("about").classList.remove("active");
-        };
-
-        document.getElementById("aboutTab").onclick = () => {
-            document.getElementById("gamesTab").classList.remove("active");
-            document.getElementById("appsTab").classList.remove("active");
-            document.getElementById("aboutTab").classList.add("active");
-            document.getElementById("games").classList.remove("active");
-            document.getElementById("apps").classList.remove("active");
-            document.getElementById("about").classList.add("active");
-        };
     </script>
 </body>
 </html>
