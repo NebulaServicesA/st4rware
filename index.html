@@ -56,6 +56,15 @@
     .content.active {
       display: block;
     }
+    .search-bar {
+      margin: 1rem;
+      padding: 0.5rem;
+      width: 300px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+      outline: none;
+    }
     .games-container {
       display: flex;
       flex-wrap: wrap;
@@ -100,20 +109,26 @@
     .game-view {
       display: none;
       flex-direction: column;
+      justify-content: flex-start;
       align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      margin-top: 2rem;
+      height: 100%;
+      background: white;
+      z-index: 1000;
     }
     .game-view.active {
       display: flex;
     }
     .iframe-container {
       width: 80%;
-      height: 500px;
+      height: 70%;
       border: 2px solid #ddd;
       border-radius: 10px;
       overflow: hidden;
-      position: relative;
+      margin-top: 4rem;
     }
     iframe {
       width: 100%;
@@ -131,6 +146,7 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 1rem;
+      z-index: 1001;
     }
     .go-back:hover {
       background: #005bb5;
@@ -154,6 +170,7 @@
   </div>
   <div id="games" class="content active">
     <h2>Games</h2>
+    <input type="text" id="searchBar" class="search-bar" placeholder="Search games..." oninput="searchGames()" />
     <div class="games-container" id="games-container"></div>
   </div>
   <div id="apps" class="content">
@@ -172,9 +189,10 @@
     <h3 id="gameTitle"></h3>
   </div>
   <footer>Powered by Unblocked Games Hub</footer>
+
   <script>
     const games = [
-      { name: "Funny Shooter 2", url: "https://bitlifeonline.github.io/class2623/funny-shooter-2/", img: "https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=1200,height=1200,fit=cover,f=png/894abba63a6b23fed823f404831f444f.jpeg" },
+       { name: "Funny Shooter 2", url: "https://bitlifeonline.github.io/class2623/funny-shooter-2/", img: "https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=1200,height=1200,fit=cover,f=png/894abba63a6b23fed823f404831f444f.jpeg" },
       { name: "Basketball Legends", url: "https://images-opensocial.googleusercontent.com/gadgets/ifr?url=https://cdn.jsdelivr.net/gh/bobydob/JSEngine@5ebf5ebca88beaad3f3e9dcf461e25778c2a1a56/build/bl20/bl2020.xml&container=ig", img: "https://play-lh.googleusercontent.com/ic00VASLUq4PMhmWyvYtAIaexc4X3dYXyDSMf4ThI6kIaxPVvKPw9xaszcUFvTAKHj8" },
       { name: "Subway Surfers", url: "https://ly4fsf.csb.app/", img: "https://play-lh.googleusercontent.com/Y1sBvjs4B9nZhNR3wQMD-aSdkCJl1j1KrezuayLCrra13LZYecvCy-Eipf3pGaIH4v_C" },
       { name: "Slope", url: "https://images-opensocial.googleusercontent.com/gadgets/ifr?url=https://cdn.jsdelivr.net/gh/sk1bx/WebStarterkit@27197d685502953065e3a3259b6e34f5acb94e65/src/sp1.5.xml&container=ig", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_jOGkGj0Auir2Z0KqYkPVM0-RDgPR-6M5Gg&s" },
@@ -185,43 +203,45 @@
       { name: "Retro Bowl", url: "https://vtn5c31dcjtimmb9o2lm882bk13i56hh-a-sites-opensocial.googleusercontent.com/gadgets/ifr?url=https://274079163-174037128449362058.preview.editmysite.com/uploads/b/139890129-899796311729593176/files/rtbl.xml&container=enterprise", img: "https://upload.wikimedia.org/wikipedia/en/b/bf/Retro_Bowl_cover.png" }
     ];
 
-    const gamesContainer = document.getElementById('games-container');
-    const gameView = document.getElementById('gameView');
-    const gameIframe = document.getElementById('gameIframe');
-    const gameTitle = document.getElementById('gameTitle');
-    const goBackButton = document.getElementById('goBack');
 
-    games.forEach(game => {
-      const gameElement = document.createElement('div');
-      gameElement.classList.add('game');
-      gameElement.innerHTML = `
-        <img src="${game.img}" alt="${game.name}">
-        <div class="game-name">${game.name}</div>
-      `;
-      gameElement.addEventListener('click', () => {
-        document.querySelector('.content.active').classList.remove('active');
-        gameView.classList.add('active');
+    const gamesContainer = document.getElementById("games-container");
+    const gameView = document.getElementById("gameView");
+    const gameIframe = document.getElementById("gameIframe");
+    const gameTitle = document.getElementById("gameTitle");
+    const goBack = document.getElementById("goBack");
+    const searchBar = document.getElementById("searchBar");
+
+    games.forEach((game) => {
+      const gameDiv = document.createElement("div");
+      gameDiv.classList.add("game");
+      gameDiv.innerHTML = `<img src="${game.img}" alt="${game.name}"><div class="game-name">${game.name}</div>`;
+      gameDiv.addEventListener("click", () => {
         gameIframe.src = game.url;
         gameTitle.textContent = game.name;
+        gameView.classList.add("active");
       });
-      gamesContainer.appendChild(gameElement);
+      gamesContainer.appendChild(gameDiv);
     });
 
-    goBackButton.addEventListener('click', () => {
-      gameView.classList.remove('active');
-      document.getElementById('games').classList.add('active');
-      gameIframe.src = '';
+    goBack.addEventListener("click", () => {
+      gameIframe.src = "";
+      gameView.classList.remove("active");
     });
 
-    const tabs = document.querySelectorAll('.tab');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelector('.tab.active').classList.remove('active');
-        tab.classList.add('active');
+    const searchGames = () => {
+      const query = searchBar.value.toLowerCase();
+      Array.from(gamesContainer.children).forEach((gameDiv) => {
+        const gameName = gameDiv.querySelector(".game-name").textContent.toLowerCase();
+        gameDiv.style.display = gameName.includes(query) ? "block" : "none";
+      });
+    };
 
-        document.querySelector('.content.active').classList.remove('active');
-        const targetContent = document.getElementById(tab.id.replace('Tab', ''));
-        targetContent.classList.add('active');
+    document.querySelectorAll(".tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
+        document.querySelectorAll(".content").forEach((c) => c.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById(tab.id.replace("Tab", "")).classList.add("active");
       });
     });
   </script>
