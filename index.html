@@ -37,19 +37,21 @@
     }
     .tab {
       padding: 0.5rem 1rem;
-      background: #e6e6e6;
-      border-radius: 5px;
       cursor: pointer;
-      transition: background 0.3s;
+      border: 2px solid transparent;
+      border-radius: 5px;
+      transition: 0.3s;
     }
-    .tab:hover, .tab.active {
+    .tab.active {
       background: #0073e6;
       color: white;
+      border-color: #005bb5;
     }
     .content {
       display: none;
       margin-top: 1.5rem;
       text-align: center;
+      width: 100%;
     }
     .content.active {
       display: block;
@@ -95,6 +97,44 @@
     .game:hover .game-name {
       opacity: 1;
     }
+    .game-view {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      margin-top: 2rem;
+    }
+    .game-view.active {
+      display: flex;
+    }
+    .iframe-container {
+      width: 80%;
+      height: 500px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .go-back {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 0.5rem 1rem;
+      background: #0073e6;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .go-back:hover {
+      background: #005bb5;
+    }
     footer {
       margin-top: 2rem;
       padding: 1rem 0;
@@ -124,6 +164,13 @@
     <h2>About Us</h2>
     <p>Welcome to Unblocked Games Hub, your go-to source for fun online games!</p>
   </div>
+  <div id="gameView" class="game-view">
+    <button class="go-back" id="goBack">Go Back</button>
+    <div class="iframe-container">
+      <iframe id="gameIframe"></iframe>
+    </div>
+    <h3 id="gameTitle"></h3>
+  </div>
   <footer>Powered by Unblocked Games Hub</footer>
   <script>
     const games = [
@@ -137,31 +184,44 @@
       { name: "Soccer Random", url: "https://images-opensocial.googleusercontent.com/gadgets/ifr?url=https://471058263-725410472258601738.preview.editmysite.com/uploads/b/139890129-510930859892590631/files/sr.xml&container=ig", img: "https://play-lh.googleusercontent.com/G1PIlb6HWKSaDre0XpUcmKGps9T4iamsSlwrogB3EJzYv4bz0M2am4D17MtGzndaOOU" },
       { name: "Retro Bowl", url: "https://vtn5c31dcjtimmb9o2lm882bk13i56hh-a-sites-opensocial.googleusercontent.com/gadgets/ifr?url=https://274079163-174037128449362058.preview.editmysite.com/uploads/b/139890129-899796311729593176/files/rtbl.xml&container=enterprise", img: "https://upload.wikimedia.org/wikipedia/en/b/bf/Retro_Bowl_cover.png" }
     ];
-    
+
     const gamesContainer = document.getElementById('games-container');
-    
+    const gameView = document.getElementById('gameView');
+    const gameIframe = document.getElementById('gameIframe');
+    const gameTitle = document.getElementById('gameTitle');
+    const goBackButton = document.getElementById('goBack');
+
     games.forEach(game => {
       const gameElement = document.createElement('div');
       gameElement.classList.add('game');
       gameElement.innerHTML = `
-        <a href="${game.url}" target="_blank">
-          <img src="${game.img}" alt="${game.name}">
-          <div class="game-name">${game.name}</div>
-        </a>
+        <img src="${game.img}" alt="${game.name}">
+        <div class="game-name">${game.name}</div>
       `;
+      gameElement.addEventListener('click', () => {
+        document.querySelector('.content.active').classList.remove('active');
+        gameView.classList.add('active');
+        gameIframe.src = game.url;
+        gameTitle.textContent = game.name;
+      });
       gamesContainer.appendChild(gameElement);
     });
-    
+
+    goBackButton.addEventListener('click', () => {
+      gameView.classList.remove('active');
+      document.getElementById('games').classList.add('active');
+      gameIframe.src = '';
+    });
+
     const tabs = document.querySelectorAll('.tab');
-    const contents = document.querySelectorAll('.content');
-    
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        contents.forEach(c => c.classList.remove('active'));
-        
+        document.querySelector('.tab.active').classList.remove('active');
         tab.classList.add('active');
-        document.getElementById(tab.id.replace('Tab', '')).classList.add('active');
+
+        document.querySelector('.content.active').classList.remove('active');
+        const targetContent = document.getElementById(tab.id.replace('Tab', ''));
+        targetContent.classList.add('active');
       });
     });
   </script>
