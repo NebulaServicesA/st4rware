@@ -1,284 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unblocked Games Hub</title>
-  <link href="https://fonts.googleapis.com/css2?family=Lemon+Milk&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Lemon Milk', sans-serif;
-    }
-    body {
-      background: #f4f4f4;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-    header {
-      background: #0073e6;
-      width: 100%;
-      padding: 1rem 0;
-      text-align: center;
-      color: white;
-      font-size: 2rem;
-      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    }
-    .tabs {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-    .tab {
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      border: 2px solid transparent;
-      border-radius: 5px;
-      transition: 0.3s;
-    }
-    .tab.active {
-      background: #0073e6;
-      color: white;
-      border-color: #005bb5;
-    }
-    .content {
-      display: none;
-      margin-top: 1.5rem;
-      text-align: center;
-      width: 100%;
-    }
-    .content.active {
-      display: block;
-    }
-    .search-bar {
-      margin: 1rem;
-      padding: 0.5rem;
-      width: 300px;
-      border: 2px solid #ddd;
-      border-radius: 5px;
-      font-size: 1rem;
-      outline: none;
-    }
-    .games-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      justify-content: center;
-    }
-    .game {
-      width: 150px;
-      height: 150px;
-      position: relative;
-      overflow: hidden;
-      background: #fff;
-      border: 2px solid #ddd;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .game:hover {
-      transform: translateY(-10px);
-      box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
-    }
-    .game img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    .game-name {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      right: 10px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: white;
-      opacity: 0;
-      transition: opacity 0.3s;
-      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
-    }
-    .game:hover .game-name {
-      opacity: 1;
-    }
-    .game-view {
-      display: none;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: white;
-      z-index: 1000;
-    }
-    .game-view.active {
-      display: flex;
-    }
-    .iframe-container {
-      width: 80%;
-      height: 70%;
-      border: 2px solid #ddd;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-top: 4rem;
-    }
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-    .go-back {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      padding: 0.5rem 1rem;
-      background: #0073e6;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 1rem;
-      z-index: 1001;
-    }
-    .go-back:hover {
-      background: #005bb5;
-    }
-    footer {
-      margin-top: 2rem;
-      padding: 1rem 0;
-      text-align: center;
-      background: #0073e6;
-      color: white;
-      width: 100%;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seraph</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('URL_FOR_BACKGROUND_IMAGE') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        h1 {
+            font-size: 4em;
+            margin: 0;
+        }
+        p {
+            margin: 0;
+            font-size: 1.2em;
+        }
+        .buttons {
+            margin-top: 20px;
+        }
+        .button {
+            display: inline-block;
+            margin: 10px;
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: scale(1.1);
+        }
+        .links {
+            margin-top: 20px;
+        }
+        .links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.8em;
+        }
+        .grid {
+            display: none;
+            margin-top: 20px;
+        }
+        .grid-item {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            background: white;
+            color: black;
+            position: relative;
+            cursor: pointer;
+        }
+        .grid-item:hover .name {
+            display: block;
+        }
+        .name {
+            display: none;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            text-align: center;
+        }
+        .game-page {
+            display: none;
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: white;
+            color: black;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-  <header>Unblocked Games Hub</header>
-  <div class="tabs">
-    <div id="gamesTab" class="tab active">Games</div>
-    <div id="appsTab" class="tab">Apps</div>
-    <div id="aboutTab" class="tab">About</div>
-  </div>
-  <div id="games" class="content active">
-    <h2>Games</h2>
-    <input type="text" id="searchBar" class="search-bar" placeholder="Search games..." oninput="searchGames()" />
-    <div class="games-container" id="games-container"></div>
-  </div>
-  <div id="apps" class="content">
-    <h2>Apps</h2>
-    <p>Explore exciting web apps!</p>
-  </div>
-  
-  <div id="about" class="content">
-    <h2>About Us</h2>
-    <p>Welcome to Unblocked Games Hub, your go-to source for fun online games!</p>
-  </div>
-  <div id="gameView" class="game-view">
-    <button class="go-back" id="goBack">Go Back</button>
-    <div class="iframe-container">
-      <iframe id="gameIframe"></iframe>
+    <div class="container">
+        <h1>seraph</h1>
+        <p>version 10 / release build</p>
+        <div class="buttons">
+            <div class="button" id="games-button">games</div>
+            <div class="button" id="apps-button">apps</div>
+            <div class="button" id="settings-button">settings</div>
+        </div>
+        <div class="links">
+            <a href="#">mobile</a> • 
+            <a href="#">rehost</a> • 
+            <a href="#">open blank</a> • 
+            <a href="#">discord</a> • 
+            <a href="#">update log</a> • 
+            <a href="#">source code</a>
+        </div>
+        <div class="footer">
+            website created/developed by @a456pur
+        </div>
     </div>
-    <h3 id="gameTitle"></h3>
-  </div>
-  <footer>Powered by Unblocked Games Hub</footer>
+    <div class="grid" id="games-grid">
+        <div class="grid-item" onclick="openGame('URL_FOR_GAME_1')">
+            <img src="URL_FOR_GAME_ICON_1" alt="Game 1">
+            <div class="name">Game 1</div>
+        </div>
+        <div class="grid-item" onclick="openGame('URL_FOR_GAME_2')">
+            <img src="URL_FOR_GAME_ICON_2" alt="Game 2">
+            <div class="name">Game 2</div>
+        </div>
+        <!-- Add more games as needed -->
+    </div>
+    <div class="game-page" id="game-page">
+        <div class="back-button" onclick="goBack()">Go Back</div>
+        <iframe id="game-iframe" src="" width="100%" height="100%"></iframe>
+    </div>
+    <script>
+        document.getElementById('games-button').onclick = function() {
+            document.querySelector('.container').style.display = 'none';
+            document.getElementById('games-grid').style.display = 'block';
+        };
 
-  <script>
-    const games = [
-    { name: "Funny Shooter 2", url: "https://bitlifeonline.github.io/class2623/funny-shooter-2/", img: "https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=1200,height=1200,fit=cover,f=png/894abba63a6b23fed823f404831f444f.jpeg" },
-      { name: "Basketball Legends", url: "https://images-opensocial.googleusercontent.com/gadgets/ifr?url=https://cdn.jsdelivr.net/gh/bobydob/JSEngine@5ebf5ebca88beaad3f3e9dcf461e25778c2a1a56/build/bl20/bl2020.xml&container=ig", img: "https://play-lh.googleusercontent.com/ic00VASLUq4PMhmWyvYtAIaexc4X3dYXyDSMf4ThI6kIaxPVvKPw9xaszcUFvTAKHj8" },
-      { name: "Subway Surfers", url: "https://ly4fsf.csb.app/", img: "https://play-lh.googleusercontent.com/Y1sBvjs4B9nZhNR3wQMD-aSdkCJl1j1KrezuayLCrra13LZYecvCy-Eipf3pGaIH4v_C" },
-      { name: "Slope", url: "https://images-opensocial.googleusercontent.com/gadgets/ifr?url=https://cdn.jsdelivr.net/gh/sk1bx/WebStarterkit@27197d685502953065e3a3259b6e34f5acb94e65/src/sp1.5.xml&container=ig", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_jOGkGj0Auir2Z0KqYkPVM0-RDgPR-6M5Gg&s" },
-      { name: "Time Shooter", url: "https://classroomjq.github.io/class2623/time-shooter-3-swat/", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQev9Sddx8DQk_gkGzI2Kze5ocs3lu1hqgA-w&s" },
-      { name: "Skibidi Toilet", url: "https://google-opensocial.googleusercontent.com/gadgets/ifr?url=https://147294106-271957305593713958.preview.editmysite.com/uploads/b/146211889-736862448591698921/files/stio.xml&container=ig", img: "https://static.wikia.nocookie.net/skibidi-toilet-official/images/b/b1/GiantST.png/revision/latest/thumbnail/width/360/height/360?cb=20240205231829" },
-      { name: "Moto X3M Pool Party", url: "https://images-opensocial.googleusercontent.com/gadgets/ifr?url=https://649025137-174029463385024710.preview.editmysite.com/uploads/b/139890129-767696982876512205/files/mx3mpp.xml&container=ig", img: "https://img.poki-cdn.com/cdn-cgi/image/quality=78,width=1200,height=1200,fit=cover,f=png/0235b530eec4f17ad60137f6b245a988.jpeg" },
-      { name: "Soccer Random", url: "https://images-opensocial.googleusercontent.com/gadgets/ifr?url=https://471058263-725410472258601738.preview.editmysite.com/uploads/b/139890129-510930859892590631/files/sr.xml&container=ig", img: "https://play-lh.googleusercontent.com/G1PIlb6HWKSaDre0XpUcmKGps9T4iamsSlwrogB3EJzYv4bz0M2am4D17MtGzndaOOU" },
-      { name: "Retro Bowl", url: "https://vtn5c31dcjtimmb9o2lm882bk13i56hh-a-sites-opensocial.googleusercontent.com/gadgets/ifr?url=https://274079163-174037128449362058.preview.editmysite.com/uploads/b/139890129-899796311729593176/files/rtbl.xml&container=enterprise", img: "https://upload.wikimedia.org/wikipedia/en/b/bf/Retro_Bowl_cover.png" },
-      { name: "buckshot", url: "https://canvas.global.ssl.fastly.net/gxmez/buckshot.html", img: "https://canvas.global.ssl.fastly.net/assets/buckshot.png" },
-      { name: "crossy road", url: "https://canvas.global.ssl.fastly.net/gxmez/crossy.html", img: "https://canvas.global.ssl.fastly.net/assets/crossy.png" },
-      { name: "bitlife", url: "https://canvas.global.ssl.fastly.net/gsrc/bitlife/index.html", img: "https://canvas.global.ssl.fastly.net/assets/bitlife.png" },
-      { name: "bloons td", url: "https://canvas.global.ssl.fastly.net/gsrc/bloonstd/index.html", img: "https://canvas.global.ssl.fastly.net/assets/btd.png" },
-      { name: "impossible quiz", url: "https://canvas.global.ssl.fastly.net/gsrc/impossiblequiz/index.html", img: "https://canvas.global.ssl.fastly.net/assets/impossiblequiz.png" },
-      { name: "friday night funkin", url: "https://canvas.global.ssl.fastly.net/gxmez/fridaynightfunkin.html", img: "https://canvas.global.ssl.fastly.net/assets/fnf.png" },
-      { name: "zelda", url: "https://canvas.global.ssl.fastly.net/emulatorjs/lozsnes/index.html", img: "https://canvas.global.ssl.fastly.net/assets/lozsnes.jpg" },
-      { name: "kirby dream land", url: "https://canvas.global.ssl.fastly.net/emulatorjs/kd3/index.html", img: "https://canvas.global.ssl.fastly.net/assets/kdb3.jpg" },
-      { name: "kirby mass attack", url: "https://canvas.global.ssl.fastly.net/emulatorjs/kma/index.html", img: "https://canvas.global.ssl.fastly.net/assets/kma.png" },
-      { name: "last seen online", url: "https://canvas.global.ssl.fastly.net/gsrc/lso/index.html", img: "https://canvas.global.ssl.fastly.net/assets/lso.png" },
-      { name: "Mortal Kombat", url: "https://canvas.global.ssl.fastly.net/emulatorjs/mkb/index.html", img: "https://canvas.global.ssl.fastly.net/assets/mkb.jpg" },
-      { name: "Mortal Kombat 2", url: "https://canvas.global.ssl.fastly.net/emulatorjs/mkb2/index.html", img: "https://canvas.global.ssl.fastly.net/assets/mkb2.png" },
-      { name: "My Friend Pedro", url: "https://canvas.global.ssl.fastly.net/gsrc/my-friend-pedro/index.html", img: "https://canvas.global.ssl.fastly.net/assets/pedro.png" },
-      { name: "Pokemon Diamond", url: "https://canvas.global.ssl.fastly.net/emulatorjs/pkd/index.html", img: "https://canvas.global.ssl.fastly.net/assets/pkd.png" },
-      { name: "Pokemon Pearl ", url: "https://canvas.global.ssl.fastly.net/emulatorjs/pkp/index.html", img: "https://canvas.global.ssl.fastly.net/assets/pkp.png" },
-      { name: "Osu", url: "https://canvas.global.ssl.fastly.net/gxmez/osu.html", img: "https://canvas.global.ssl.fastly.net/assets/osu.png" },
-      { name: "Stumble Guys", url: "https://canvas.global.ssl.fastly.net/gxmez/stumble.html", img: "https://canvas.global.ssl.fastly.net/assets/stumble.png" },
-      { name: "Tetris", url: "https://canvas.global.ssl.fastly.net/emulatorjs/tetris/index.html", img: "https://canvas.global.ssl.fastly.net/assets/tetris-sq-1643414363421.jpg" },
-      { name: "Venge", url: "https://canvas.global.ssl.fastly.net/gxmez/venge.html", img: "https://canvas.global.ssl.fastly.net/assets/venge.png" },
-      { name: "SuperHot", url: "https://canvas.global.ssl.fastly.net/gsrc/superhot/index.html", img: "https://canvas.global.ssl.fastly.net/assets/superhot.png" },
-      { name: "Stickman Hook", url: "https://canvas.global.ssl.fastly.net/gxmez/stickman.html", img: "https://canvas.global.ssl.fastly.net/assets/stickman.png" },
-      { name: "Roblox", url: "https://canvas.global.ssl.fastly.net/gxmez/roblox.html", img: "https://canvas.global.ssl.fastly.net/assets/roblox.png" },
-      { name: "Paperio 2", url: "https://canvas.global.ssl.fastly.net/gsrc/paperio2/index.html", img: "https://canvas.global.ssl.fastly.net/assets/paperio.png" },
-      { name: "Krunker", url: "https://canvas.global.ssl.fastly.net/gxmez/krunker.html", img: "https://canvas.global.ssl.fastly.net/assets/krunker.png" },
-      { name: "Grand Theft Auto Chinatown", url: "https://canvas.global.ssl.fastly.net/emulatorjs/gtacw/index.html", img: "https://canvas.global.ssl.fastly.net/assets/gtacw.png" },
-      { name: "Call Of Duty", url: "https://canvas.global.ssl.fastly.net/gxmez/cod.html", img: "https://canvas.global.ssl.fastly.net/assets/cod.png" },
-      { name: "Baldi", url: "https://canvas.global.ssl.fastly.net/gxmez/baldi.html", img: "https://canvas.global.ssl.fastly.net/assets/baldi.png" },
-      { name: "1v1.lol", url: "https://canvas.global.ssl.fastly.net/gsrc/1v1lol/index.html", img: "https://canvas.global.ssl.fastly.net/assets/latest%20(1).png" },
-      { name: "Drive Mad", url: "https://canvas.global.ssl.fastly.net/gsrc/bloxors/index.html", img: "https://canvas.global.ssl.fastly.net/assets/drivemad.png" },
-      { name: "Infinite Craft", url: "https://canvas.global.ssl.fastly.net/gxmez/infinitecraft.html", img: "https://canvas.global.ssl.fastly.net/assets/infinitecraft.png" },
-      { name: "Bloxorz", url: "https://canvas.global.ssl.fastly.net/gsrc/bloxors/index.html", img: "https://canvas.global.ssl.fastly.net/assets/bloxors.png" },
-      { name: "Block Blast", url: "https://canvas.global.ssl.fastly.net/gxmez/blockblast.html", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR2DYzG4e8vFxcSnQrpe2m1O8_b0S9GDGSag&s" }
-    ];
+        document.getElementById('apps-button').onclick = function() {
+            // Add functionality for apps button if needed
+        };
 
-   
+        function openGame(url) {
+            document.getElementById('games-grid').style.display = 'none';
+            document.getElementById('game-page').style.display = 'block';
+            document.getElementById('game-iframe').src = url;
+        }
 
-
-    const gamesContainer = document.getElementById("games-container");
-    const gameView = document.getElementById("gameView");
-    const gameIframe = document.getElementById("gameIframe");
-    const gameTitle = document.getElementById("gameTitle");
-    const goBack = document.getElementById("goBack");
-    const searchBar = document.getElementById("searchBar");
-
-    games.forEach((game) => {
-      const gameDiv = document.createElement("div");
-      gameDiv.classList.add("game");
-      gameDiv.innerHTML = `<img src="${game.img}" alt="${game.name}"><div class="game-name">${game.name}</div>`;
-      gameDiv.addEventListener("click", () => {
-        gameIframe.src = game.url;
-        gameTitle.textContent = game.name;
-        gameView.classList.add("active");
-      });
-      gamesContainer.appendChild(gameDiv);
-    });
-
-    goBack.addEventListener("click", () => {
-      gameIframe.src = "";
-      gameView.classList.remove("active");
-    });
-
-    const searchGames = () => {
-      const query = searchBar.value.toLowerCase();
-      Array.from(gamesContainer.children).forEach((gameDiv) => {
-        const gameName = gameDiv.querySelector(".game-name").textContent.toLowerCase();
-        gameDiv.style.display = gameName.includes(query) ? "block" : "none";
-      });
-    };
-
-    document.querySelectorAll(".tab").forEach((tab) => {
-      tab.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
-        document.querySelectorAll(".content").forEach((c) => c.classList.remove("active"));
-        tab.classList.add("active");
-        document.getElementById(tab.id.replace("Tab", "")).classList.add("active");
-      });
-    });
-  </script>
+        function goBack() {
+            document.getElementById('game-page').style.display = 'none';
+            document.getElementById('games-grid').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
